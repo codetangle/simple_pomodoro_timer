@@ -6,9 +6,16 @@
 <body>
 	<div id="wrapper">
 		<h1>Time Remaining</h1>
-		<div id="time_remaining">00:00:00
+		<div id="time_remaining">00:00:00</div>
+		<div id="control_buttons">
 		</div>
+		<ul id="timer_list">
+			<button type="button" onclick="clock.stop(); clock = clock25; clock.reset();">25:00</button>
+			<button type="button" onclick="clock.stop(); clock = clock5; clock.reset();">05:00</button>
+		</ul>
+		<iframe id="video_iframe" width="420" height="315"></iframe>
 	</div>
-	<script type="text/javascript" src="Timer.js"></script>
+	<script type="text/javascript" src="js/timer.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>

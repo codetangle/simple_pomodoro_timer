@@ -9,6 +9,9 @@ var Timer = function(timeInSeconds, zeroFunction) {
 	this.countingDown = false;
 }
 
+// Function to run when timer reaches zero
+Timer.prototype.zeroFunction = this.zeroFunction;
+
 // Format this.remainingTime (in seconds) to HH:MM:SS
 Timer.prototype.formatTime = function() {
 	var seconds = this.remainingTime;
@@ -23,12 +26,13 @@ Timer.prototype.formatTime = function() {
 			return number;
 		}
 	};
-	// Calculate seconds
+
+	// Find the number of minutes
 	if (seconds >= 60) {
 		minutes = Math.floor(seconds/60);
 		seconds = seconds % 60;
 	}
-	// Calculate minutes
+	// Calculate the number of hours
 	if (minutes >= 60) {
 		hours = Math.floor(minutes/60);
 		minutes = minutes % 60;
@@ -54,18 +58,17 @@ Timer.prototype.start = function() {
 	this.intervalId = setInterval(function() {
 		thisClock.updateTime();
 	}, 1000);
-	console.log(this.intervalId);
 };
 
 // Stop the timer
-Timer.prototype.stop = function(intervalId) {
-	clearInterval(intervalId);
+Timer.prototype.stop = function() {
+	clearInterval(this.intervalId);
 	this.countingDown = false;
 };
 
 // Reset thet timer to it's original time
-Timer.prototype.reset = function(intervalId) {
-	this.stop(intervalId);
+Timer.prototype.reset = function() {
+	this.stop();
 	this.remainingTime = this.startingTime;
 	// Add the new time to the document
 	this.addTime();
@@ -73,17 +76,12 @@ Timer.prototype.reset = function(intervalId) {
 
 // This function updates timeRemaining and adds the new time to the page
 Timer.prototype.updateTime = function() {
+	if(this.remainingTime <= 0) {
+		this.stop();
+		this.zeroFunction();
+	}
 	if(this.countingDown){
 		this.tick();
 		this.addTime();
 	}
 }
-
-// Initialize a new Timer
-var clock = new Timer(12045);
-clock.addTime();
-
-// Tell the counter to count down
-clock.start();
-
-
