@@ -1,11 +1,20 @@
-var timerModels = {
-	// Define functions to run when timer ends
-	timesUp: function() {
-		alert('Your time has come to an end');
+var timerFunctions = {
+	// Define functions to run when the 25:00 timer ends
+	timesUp25: function() {
+		var videoElement = document.getElementById('video_iframe');
+		videoElement.src = 'https://youtube.com/embed/V1bFr2SWP1I?autoplay=1';
+		//alert('Pom 25 has come to an end');
 	},
+	// Define functions to run when the 5:00 timer ends
+	timesUp5: function() {
+		var videoElement = document.getElementById('video_iframe');
+		videoElement.src = 'https://youtube.com/embed/0aog7PYkj5w?autoplay=1';
+	}
+}
+var timerModels = {
 	// Define your timers here
-	clock25: new Timer(1500, this.timesUp),
-	clock5: new Timer(300, this.timesUp)
+	clock25: new Timer(1500, timerFunctions.timesUp25),
+	clock5: new Timer(300, timerFunctions.timesUp5)
 };
 
 var pomodoroTimers = {
@@ -18,6 +27,8 @@ var pomodoroTimers = {
 	// Keeps track the the timer that is currently running
 	currentTimer: timerModels.clock25,
 	// A button is created to each timer in the timerList array
+	// TODO: create a function that takes each timer from timerModels
+	// and put it into an array that is returned to timerList
 	timerList: [timerModels.clock25, timerModels.clock5],
 	// Load the current timer into the DOM
 	displayTimer: function() {
@@ -43,24 +54,29 @@ var controlButtonsView = {
 		var l = buttonList.length;
 		// Loops through each control button
 		for(i = 0; i < l; i++) {
-			this.addButton(buttonContainer, buttonList[i]);
+			buttonController.addButton(buttonContainer, buttonList[i]);
 		}
-	},
-	addButton: function(domElement, buttonArray) {
-		// Create the button element that will get added to the page
-		var button = document.createElement('BUTTON');
-		button.setAttribute('type', 'button');
-		button.setAttribute('onClick', buttonArray[0]);
-		// Create the text node that will become the button's text
-		var buttonName = document.createTextNode(buttonArray[1]);
-		button.appendChild(buttonName);
-		domElement.appendChild(button);
 	}
 };
 
 var timerButtonsView = {
 	// Load a button for each timer into the DOM
-	render: function() {}
+	render: function() {
+		// Grabs the page element where the buttons will be stored
+		var buttonContainer = document.getElementById('timer_list');
+		var i = 0;
+		var buttonList = pomodoroTimers.timerList;
+		var l = buttonList.length;
+		// Loops through each control button
+		for(i = 0; i < l; i++) {
+			onClickFunction = 'buttonController.loadTimer(pomodoroTimers.timerList[' + i + '])';
+			controlButtonArray = [
+				onClickFunction,
+				buttonList[i].timerName
+			];
+			buttonController.addButton(buttonContainer, controlButtonArray);
+		}
+	}
 };
 
 // Allows buttons to control the function of timers
@@ -78,6 +94,17 @@ var buttonController = {
 	loadTimer: function(timer) {
 		pomodoroTimers.currentTimer = timer;
 		pomodoroTimers.displayTimer();
+	},
+	// Adds a button to the DOM
+	addButton: function(domElement, buttonArray) {
+		// Create the button element that will get added to the page
+		var button = document.createElement('BUTTON');
+		button.setAttribute('type', 'button');
+		button.setAttribute('onClick', buttonArray[0]);
+		// Create the text node that will become the button's text
+		var buttonName = document.createTextNode(buttonArray[1]);
+		button.appendChild(buttonName);
+		domElement.appendChild(button);
 	}
 };
 

@@ -13,6 +13,8 @@ var Timer = function(timeInSeconds, zeroFunction) {
 	this.intervalId = 0;
 	// True if the clock should be counting down, false otherwise.
 	this.countingDown = false;
+	// The timers name is the amount of time it tracks
+	this.timerName = this.formatTime(timeInSeconds);
 }
 
 // Function to run when timer reaches zero
@@ -43,7 +45,11 @@ Timer.prototype.formatTime = function() {
 		hours = Math.floor(minutes/60);
 		minutes = minutes % 60;
 	}
-	return addZero(hours) + ":" + addZero(minutes) + ":" + addZero(seconds);
+	timeString = addZero(minutes) + ":" + addZero(seconds);
+	if (hours !== 0) {
+		timeString = addZero(hours) + ":" + timeString;
+	}
+	return timeString;
 };
 
 // Adds timeRemaining to the page
