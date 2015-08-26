@@ -2,10 +2,16 @@
 // @param timeInSeconds - The time in seconds that the timer with run
 // @param zeroFunction - A function that runs when the time hits zero.
 var Timer = function(timeInSeconds, zeroFunction) {
+	// The amount of time the timer will count down, must be in seconds,
+	// and must be an integer
 	this.startingTime = timeInSeconds;
+	// The amount of time left on the clock
 	this.remainingTime = timeInSeconds;
+	// The function to run when the timer reaches zero
 	this.zeroFunction = zeroFunction;
+	// The id of the setInterval function so we can stop and start it again
 	this.intervalId = 0;
+	// True if the clock should be counting down, false otherwise.
 	this.countingDown = false;
 }
 
@@ -41,7 +47,7 @@ Timer.prototype.formatTime = function() {
 };
 
 // Adds timeRemaining to the page
-Timer.prototype.addTime = function() {
+Timer.prototype.addTimer = function() {
 	document.getElementById('time_remaining').innerHTML = this.formatTime();
 };
 
@@ -71,7 +77,7 @@ Timer.prototype.reset = function() {
 	this.stop();
 	this.remainingTime = this.startingTime;
 	// Add the new time to the document
-	this.addTime();
+	this.addTimer();
 };
 
 // This function updates timeRemaining and adds the new time to the page
@@ -82,6 +88,6 @@ Timer.prototype.updateTime = function() {
 	}
 	if(this.countingDown){
 		this.tick();
-		this.addTime();
+		this.addTimer();
 	}
 }
