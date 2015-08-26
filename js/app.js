@@ -10,7 +10,8 @@ var timerFunctions = {
 		var videoElement = document.getElementById('video_iframe');
 		videoElement.src = 'https://youtube.com/embed/0aog7PYkj5w?autoplay=1';
 	}
-}
+};
+
 var timerModels = {
 	// Define your timers here
 	clock25: new Timer(1500, timerFunctions.timesUp25),
@@ -50,7 +51,7 @@ var controlButtonsView = {
 		// Grabs the page element where the buttons will be stored
 		var buttonContainer = document.getElementById('control_buttons');
 		var i = 0;
-		var buttonList = controlButtonModels.buttons
+		var buttonList = controlButtonModels.buttons;
 		var l = buttonList.length;
 		// Loops through each control button
 		for(i = 0; i < l; i++) {

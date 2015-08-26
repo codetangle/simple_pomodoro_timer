@@ -15,7 +15,7 @@ var Timer = function(timeInSeconds, zeroFunction) {
 	this.countingDown = false;
 	// The timers name is the amount of time it tracks
 	this.timerName = this.formatTime(timeInSeconds);
-}
+};
 
 // Function to run when timer reaches zero
 Timer.prototype.zeroFunction = this.zeroFunction;
@@ -96,4 +96,4 @@ Timer.prototype.updateTime = function() {
 		this.tick();
 		this.addTimer();
 	}
-}
+};
